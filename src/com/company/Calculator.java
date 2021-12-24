@@ -12,6 +12,7 @@ public class Calculator {
     // List of all people and their payment details
     public static ArrayList<Person> personList = new ArrayList<Person>();
     public static final String folder = "C:\\Users\\mahee\\Desktop\\Projects\\GroupCostCalc\\csv\\";
+    public static final int FIRSTPAYER = 1;
 
     /**
      *  Reads the csv file and sets the commodityList and personList
@@ -37,29 +38,8 @@ public class Calculator {
                 /* Make things paid */
                 ArrayList<Payment> thingsPaid = new ArrayList<Payment>();
 
-
                 /* Make things to pay */
-                // Split values[3]. If already in commodity list, add person
-                // If not in commodity list, add it with person
-                ArrayList<String> toPay = new ArrayList<String>();
-                String[] things = values[3].split(" ");
-                for (int i=0; i< things.length; i++) {
-                    Boolean found = false;
-                    // If commodity is in the commodity list
-                    for (int j=0; j < commodityList.size(); j++) {
-                        if (commodityList.get(j).getName().equals(things[i])) {
-                            commodityList.get(j).addPerson();
-                            found = true;
-                            break;
-                        }
-                    }
-                    // If commodity is new
-                    if (!found) {
-                        commodityList.add(new Commodity(things[i], 1, 0));
-                    }
-                    // Add to person's array list
-                    toPay.add(things[i]);
-                }
+                ArrayList<String> toPay = createToPay(values[3]);
 
                 /* Make new person with those values, add to personList */
                 Person person = new Person(name, bsb, accNum, thingsPaid, toPay);
@@ -71,9 +51,41 @@ public class Calculator {
         }
     }
 
-//    public ArrayList<String> createToPay(String things) {
-//
-//    }
+    /**
+     * Split a line with some names of commodities
+     * If already in commodity list, add person
+     * If not in commodity list, add it with person
+     * @param line
+     * @return
+     */
+    public static ArrayList<String> createToPay(String line) {
+        // Create arraylist for the strings, and array to put the commodities
+        // in the commodities list
+        ArrayList<String> toPay = new ArrayList<String>();
+        String[] things = line.split(" ");
+
+        // Go through the commodity names in the line
+        for (int i=0; i< things.length; i++) {
+            Boolean found = false;
+            // If commodity is in the commodity list, increase number of
+            // people paying for it by 1
+            for (int j=0; j < commodityList.size(); j++) {
+                if (commodityList.get(j).getName().equals(things[i])) {
+                    commodityList.get(j).addPerson();
+                    found = true;
+                    break;
+                }
+            }
+            // If commodity is new, add it to the list and set number
+            // of people paying for it at 1
+            if (!found) {
+                commodityList.add(new Commodity(things[i], FIRSTPAYER, 0));
+            }
+            // Add to person's array list
+            toPay.add(things[i]);
+        }
+        return toPay;
+    }
 
     public static void main(String[] args) {
 	// write your code here
