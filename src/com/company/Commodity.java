@@ -33,4 +33,21 @@ public class Commodity {
     public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;
     }
+
+    public void addPerson() {
+        peoplePaying++;
+    }
+
+    public void removePerson() {
+        peoplePaying--;
+    }
+
+    @Override
+    public String toString() {
+        return "Commodity{" +
+                "name='" + name + '\'' +
+                ", peoplePaying=" + peoplePaying +
+                ", totalCost=" + totalCost +
+                '}';
+    }
 }

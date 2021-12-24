@@ -23,4 +23,12 @@ public class Payment {
     public void setCost(int cost) {
         this.cost = cost;
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "thing=" + thing +
+                ", cost=" + cost +
+                '}';
+    }
 }
