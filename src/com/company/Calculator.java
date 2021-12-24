@@ -36,7 +36,7 @@ public class Calculator {
                 String accNum = values[2];
 
                 /* Make things paid */
-                ArrayList<Payment> thingsPaid = new ArrayList<Payment>();
+                ArrayList<Payment> thingsPaid = createThingsPaid(values[4]);
 
                 /* Make things to pay */
                 ArrayList<String> toPay = createToPay(values[3]);
@@ -49,6 +49,27 @@ public class Calculator {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Splits a line with all personal payments
+     * @param line
+     * @return
+     */
+    public static ArrayList<Payment> createThingsPaid (String line) {
+        ArrayList<Payment> thingsPaid = new ArrayList<Payment>();
+        String[] payments = line.split(";");
+
+        for (int i=0; i< payments.length; i++) {
+            // Make each payment into a new payment
+            String[] individualPayment = payments[i].split(" ");
+            Payment payment = new Payment(individualPayment[0], Float.parseFloat(individualPayment[1]));
+
+
+            // Add payment to thingsPaid
+            thingsPaid.add(payment);
+        }
+        return thingsPaid;
     }
 
     /**
@@ -93,9 +114,9 @@ public class Calculator {
         for (int i=0; i < personList.size(); i++) {
             System.out.println(personList.get(i).toString());
         }
-        System.out.println("\n");
-        for (int i=0; i < commodityList.size(); i++) {
-            System.out.println(commodityList.get(i).toString());
-        }
+//        System.out.println("\n");
+//        for (int i=0; i < commodityList.size(); i++) {
+//            System.out.println(commodityList.get(i).toString());
+//        }
     }
 }

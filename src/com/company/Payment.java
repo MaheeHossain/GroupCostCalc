@@ -4,19 +4,19 @@ package com.company;
  * Things person has paid for
  */
 public class Payment {
-    public Commodity thing;
-    public int cost;
+    public String thing;
+    public float cost;
 
-    public Payment(Commodity thing, int cost) {
+    public Payment(String thing, float cost) {
         this.thing = thing;
         this.cost = cost;
     }
 
-    public Commodity getThing() {
+    public String getThing() {
         return thing;
     }
 
-    public int getCost() {
+    public float getCost() {
         return cost;
     }
 
@@ -26,9 +26,6 @@ public class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" +
-                "thing=" + thing +
-                ", cost=" + cost +
-                '}';
+        return '{'+ thing + ", " + cost + '}';
     }
 }
